@@ -92,13 +92,23 @@ export default {
   },
   methods: {
     updateFilterMulti() {
-      this.params.filterChangedCallback({
-        status: {
-          filter: this.ftValue,
-          filterType: "multiple-choices",
-          type: "select",
-        },
-      })
+      if (this.ftValue && this.ftValue.length) {
+        this.params.filterChangedCallback({
+          status: {
+            filter: this.ftValue,
+            filterType: "multiple-choices",
+            type: "select",
+          },
+        })
+      } else {
+        this.params.filterChangedCallback({
+          status: {
+            filter: null,
+            filterType: "multiple-choices",
+            type: "select",
+          },
+        })
+      }
     },
     updateFilterSingle() {
       this.params.filterChangedCallback({
@@ -110,10 +120,9 @@ export default {
       })
     },
     handlerSyncStoredFilter(_filterObj) {
-      console.log(_filterObj)
       if (_filterObj.filterType === "multiple-choices") {
         this.albleToReact = false
-        this.ftValue = _filterObj.filter.split(",")
+        this.ftValue = _filterObj.filter ? _filterObj.filter.split(",") : []
       }
       this.$nextTick(() => {
         this.albleToReact = true

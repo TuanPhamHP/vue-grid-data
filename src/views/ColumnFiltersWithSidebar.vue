@@ -246,14 +246,16 @@ export default {
     async filterChangedCallback(modelObj = null) {
       this.showLoadingOverlay()
       let model = this.gridApi.getFilterModel()
-
       if (modelObj) {
         model = {
           ...model,
           ...modelObj,
         }
       }
-      console.log(model)
+      // check status custom phase
+      if (model.status && !model.status.filter) {
+        delete model.status
+      }
       const filterApplied = this.parseFilterToParams(model)
       const paginationQuery = {
         size: this.currentPagination.per_page,
