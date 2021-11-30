@@ -289,12 +289,15 @@ export default {
         model = {
           ...model,
           ...modelObj,
-          ...this.currentFilter
+          ...this.currentFilter,
         }
       }
       // check status custom phase
       if (model.status && !model.status.filter) {
         delete model.status
+      }
+      if (model.status_single && !model.status_single.filter) {
+        delete model.status_single
       }
       const filterApplied = this.parseFilterToParams(model)
       const paginationQuery = {
@@ -325,14 +328,21 @@ export default {
         )
         if (tainted) {
           if (
-            queriesComputed[`filterModel[${o}][filterType]`] ===
+            queriesComputed[`filterModel[status_single][filterType]`] ===
             "single-choices"
           ) {
-            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`]
+            const arrFromFilter = queriesComputed[
+              `filterModel[status_single][filter]`
+            ]
+              ? queriesComputed[`filterModel[status_single][filter]`]
               : []
-            queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
-          } else {
+            queriesComputed[`filterModel[status_single][filter][0]`] =
+              arrFromFilter
+          }
+          if (
+            queriesComputed[`filterModel[${o}][filterType]`] ===
+            "multiple-choices"
+          ) {
             const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
               ? queriesComputed[`filterModel[${o}][filter]`].split(",")
               : []
@@ -522,14 +532,21 @@ export default {
         )
         if (tainted) {
           if (
-            queriesComputed[`filterModel[${o}][filterType]`] ===
+            queriesComputed[`filterModel[status_single][filterType]`] ===
             "single-choices"
           ) {
-            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`]
+            const arrFromFilter = queriesComputed[
+              `filterModel[status_single][filter]`
+            ]
+              ? queriesComputed[`filterModel[status_single][filter]`]
               : []
-            queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
-          } else {
+            queriesComputed[`filterModel[status_single][filter][0]`] =
+              arrFromFilter
+          }
+          if (
+            queriesComputed[`filterModel[${o}][filterType]`] ===
+            "multiple-choices"
+          ) {
             const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
               ? queriesComputed[`filterModel[${o}][filter]`].split(",")
               : []

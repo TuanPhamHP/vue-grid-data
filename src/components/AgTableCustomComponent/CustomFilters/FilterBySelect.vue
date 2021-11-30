@@ -22,11 +22,11 @@
         <input
           v-model="ftValueSingle"
           type="radio"
-          :id="`item-numb-${idx}`"
-          name="vehicle1"
+          :id="`item-numb2-${idx}`"
+          name="vehicle2"
           :value="item[itemValue]"
         />
-        <label :for="`item-numb-${idx}`"> {{ item[itemText] || item }}</label>
+        <label :for="`item-numb2-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
     </div>
   </div>

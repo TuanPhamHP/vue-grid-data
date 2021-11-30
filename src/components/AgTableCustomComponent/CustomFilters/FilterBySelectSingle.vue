@@ -9,11 +9,11 @@
         <input
           v-model="ftValue"
           type="checkbox"
-          :id="`item-numb-${idx}`"
-          name="vehicle1"
+          :id="`item-numb3-${idx}`"
+          name="vehicle3"
           :value="item[itemValue]"
         />
-        <label :for="`item-numb-${idx}`"> {{ item[itemText] || item }}</label>
+        <label :for="`item-numb3-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
     </div>
     <!-- single select -->
@@ -22,10 +22,11 @@
         <input
           v-model="ftValueSingle"
           type="radio"
-          :id="`item-numb-${idx}`"
+          :id="`item-numb4-${idx}`"
+          name="vehicle4"
           :value="item[itemValue]"
         />
-        <label :for="`item-numb-${idx}`"> {{ item[itemText] || item }}</label>
+        <label :for="`item-numb4-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
     </div>
     <div class="clear-button">
@@ -155,11 +156,15 @@ export default {
         this.$store.commit("agFilter/setCurrentFilter", {
           status_single: {
             filter: this.ftValueSingle,
+            filterType: "single-choices",
+            type: "select",
           },
         })
         this.params.filterChangedCallback({
           status_single: {
             filter: this.ftValueSingle,
+            filterType: "single-choices",
+            type: "select",
           },
         })
       }
