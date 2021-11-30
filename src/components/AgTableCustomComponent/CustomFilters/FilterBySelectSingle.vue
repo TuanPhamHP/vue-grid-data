@@ -131,13 +131,6 @@ export default {
     },
     clearSingle() {
       this.ftValueSingle = null;
-      this.params.filterChangedCallback({
-        status: {
-          filter: null,
-          filterType: "single-choices",
-          type: "select",
-        },
-      })
     },
     handlerSyncStoredFilter(_filterObj) {
       if (_filterObj.filterType === "multiple-choices") {
