@@ -45,6 +45,7 @@ import CustomLoadingOverlay from "@/components/AgTableCustomComponent/LoadingOve
 import CustomNoRowsOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customNoRowsOverlayVue"
 import Pagination from "@/components/AgTableCustomComponent/Footer/Pagination.vue"
 import FilterBySelectSingle from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelectSingle.vue"
+import FilterBySelect from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelect.vue"
 //
 // var listStatus = [
 //   { id: 1, name: "Nháp" },
@@ -71,6 +72,8 @@ export default {
     customNoRowsOverlay: CustomNoRowsOverlay,
     // eslint-disable-next-line vue/no-unused-components
     FilterBySelectSingle: FilterBySelectSingle,
+    // eslint-disable-next-line vue/no-unused-components
+    FilterBySelect: FilterBySelect,
   },
   mixins: [agFilters],
   data() {
@@ -119,6 +122,27 @@ export default {
         {
           field: "status.name",
           filterFramework: "FilterBySelectSingle",
+          // filter: "agSetColumnFilter",
+
+          icons: "fa-bars",
+          maxWidth: 180,
+          headerName: "Trạng thái đơn",
+          filterParams: {
+            filterChangedCallback: this.filterChangedCallback,
+            // valueFormatter: (params) => {
+            //   return params.value
+            // },
+            // values: function (params) {
+            //   params.success(listStatus.map((o) => o.name))
+            //   // setTimeout(function () {
+            //   //   params.success([...listStatus])
+            //   // }, 1000)
+            // },
+          },
+        },
+        {
+          field: "status.name",
+          filterFramework: "FilterBySelect",
           // filter: "agSetColumnFilter",
 
           icons: "fa-bars",
