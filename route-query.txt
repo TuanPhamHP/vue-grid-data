@@ -1,0 +1,35 @@
+example: 
+
+-- Obj
+endRow: "10"
+filterModel[description][filterType]: "text"
+filterModel[description][filter]: "về việc"
+filterModel[description][type]: "contains"
+filterModel[documentary_type_id][filter]: "1"
+filterModel[number][condition1][filterType]: "number"
+filterModel[number][condition1][filter]: "1"
+filterModel[number][condition1][type]: "equals"
+filterModel[number][condition2][filterType]: "number"
+filterModel[number][condition2][filter]: "2"
+filterModel[number][condition2][type]: "greaterThan"
+filterModel[number][filterType]: "number"
+filterModel[number][operator]: "OR"
+filterModel[receive_date][dateFrom]: "2021-11-24 00:00:00"
+filterModel[receive_date][dateTo]: ""
+filterModel[receive_date][filterType]: "date"
+filterModel[receive_date][type]: "equals"
+pivotMode: "false"
+startRow: "0"
+
+
+
+single query
+-- Obj
+
+filterModel[description][filterType]: "text"  -> filter: "1121"
+filterModel[description][filter]: "về việc" -> filterType: "text"
+filterModel[description][type]: "contains" -> type: "contains"
+
+
+
+
