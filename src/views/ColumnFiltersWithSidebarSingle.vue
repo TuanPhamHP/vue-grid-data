@@ -294,14 +294,12 @@ export default {
         if (tainted) {
           if (
             queriesComputed[`filterModel[${o}][filterType]`] ===
-            "multiple-choices"
+            "single-choices"
           ) {
             const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+              ? queriesComputed[`filterModel[${o}][filter]`]
               : []
-            arrFromFilter.forEach((j, idx) => {
-              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
-            })
+              queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
           }
         }
       })
@@ -324,7 +322,7 @@ export default {
         const query = {
           include: "fields,approvers,followers,creator,category",
           type: "i_approve",
-          ...queriesComputed,
+          ...this.handleRemoveUnusedQuery(queriesComputed),
           ...paginationQuery,
         }
         const res = await api.appData.getApproval(query)
@@ -486,14 +484,12 @@ export default {
         if (tainted) {
           if (
             queriesComputed[`filterModel[${o}][filterType]`] ===
-            "multiple-choices"
+            "single-choices"
           ) {
             const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+              ? queriesComputed[`filterModel[${o}][filter]`]
               : []
-            arrFromFilter.forEach((j, idx) => {
-              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
-            })
+            queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
           }
         }
       })
@@ -510,7 +506,9 @@ export default {
             return null
           }
         })
-      const res = await api.appData.getApproval(queriesComputed)
+      const res = await api.appData.getApproval(
+        this.handleRemoveUnusedQuery(queriesComputed),
+      )
       if (!res) {
         return null
       }
@@ -541,6 +539,17 @@ export default {
       }
 
       this.paginationChagedCallback()
+    },
+    handleRemoveUnusedQuery(_model) {
+      if (!_model) {
+        return {}
+      }
+      const model = { ..._model }
+      const keyArray = Object.keys(_model)
+      if (keyArray.includes("filterModel[status][filter]")) {
+        delete model["filterModel[status][filter]"]
+      }
+      return model
     },
   },
 }
