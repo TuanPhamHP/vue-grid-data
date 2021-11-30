@@ -221,6 +221,7 @@ export default {
     this.$store.commit("agFilter/setDefaultFilter", {
       filterWithSideBar_status: {},
     })
+    this.$store.commit("agFilter/setCurrentTable", "")
   },
   methods: {
     // onRowSelected(event) {
