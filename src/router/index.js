@@ -41,6 +41,14 @@ const routes = [
         /* webpackChunkName: "about" */ "../views/ColumnFiltersWithSidebar.vue"
       ),
   },
+  {
+    path: "/column-filters-sidebar-single",
+    name: "ColumnFiltersWithSidebarSingle",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/ColumnFiltersWithSidebarSingle.vue"
+      ),
+  },
 ]
 
 const router = new VueRouter({
