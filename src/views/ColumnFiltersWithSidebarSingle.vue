@@ -299,7 +299,14 @@ export default {
             const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
               ? queriesComputed[`filterModel[${o}][filter]`]
               : []
-              queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
+            queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
+          } else {
+            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
+              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+              : []
+            arrFromFilter.forEach((j, idx) => {
+              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
+            })
           }
         }
       })
@@ -490,6 +497,13 @@ export default {
               ? queriesComputed[`filterModel[${o}][filter]`]
               : []
             queriesComputed[`filterModel[${o}][filter][0]`] = arrFromFilter
+          } else {
+            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
+              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+              : []
+            arrFromFilter.forEach((j, idx) => {
+              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
+            })
           }
         }
       })
