@@ -551,6 +551,9 @@ export default {
       if (keyArray.includes("filterModel[status][filter]")) {
         delete model["filterModel[status][filter]"]
       }
+      if (keyArray.includes("filterModel[status_single][filter]")) {
+        delete model["filterModel[status_single][filter]"]
+      }
       return model
     },
   },

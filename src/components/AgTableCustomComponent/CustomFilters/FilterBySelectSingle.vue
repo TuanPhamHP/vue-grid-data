@@ -88,6 +88,7 @@ export default {
   computed: {
     ...mapState({
       defaultFilter: (state) => state.agFilter.defaultFilter,
+      currentFilter: (state) => state.agFilter.currentFilter,
     }),
   },
   mounted() {
@@ -103,6 +104,13 @@ export default {
   methods: {
     updateFilterMulti() {
       if (this.ftValue && this.ftValue.length) {
+        this.$store.commit("agFilter/setCurrentFilter", {
+          status: {
+            filter: this.ftValue,
+            filterType: "multiple-choices",
+            type: "select",
+          },
+        })
         this.params.filterChangedCallback({
           status: {
             filter: this.ftValue,
@@ -111,6 +119,13 @@ export default {
           },
         })
       } else {
+        this.$store.commit("agFilter/setCurrentFilter", {
+          status: {
+            filter: null,
+            filterType: "multiple-choices",
+            type: "select",
+          },
+        })
         this.params.filterChangedCallback({
           status: {
             filter: null,
@@ -121,16 +136,36 @@ export default {
       }
     },
     updateFilterSingle() {
-      this.params.filterChangedCallback({
-        status: {
-          filter: this.ftValueSingle,
-          filterType: "single-choices",
-          type: "select",
-        },
-      })
+      if (this.ftValueSingle) {
+        this.$store.commit("agFilter/setCurrentFilter", {
+          status_single: {
+            filter: this.ftValueSingle,
+            filterType: "single-choices",
+            type: "select",
+          },
+        })
+        this.params.filterChangedCallback({
+          status_single: {
+            filter: this.ftValueSingle,
+            filterType: "single-choices",
+            type: "select",
+          },
+        })
+      } else {
+        this.$store.commit("agFilter/setCurrentFilter", {
+          status_single: {
+            filter: this.ftValueSingle,
+          },
+        })
+        this.params.filterChangedCallback({
+          status_single: {
+            filter: this.ftValueSingle,
+          },
+        })
+      }
     },
     clearSingle() {
-      this.ftValueSingle = null;
+      this.ftValueSingle = null
     },
     handlerSyncStoredFilter(_filterObj) {
       if (_filterObj.filterType === "multiple-choices") {

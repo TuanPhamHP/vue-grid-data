@@ -40,6 +40,7 @@ import "ag-grid-community/dist/styles/ag-grid.css"
 import "ag-grid-community/dist/styles/ag-theme-alpine.css"
 import TextAndFilter from "@/components/AgTableCustomComponent/Header/TextAndFilter.vue"
 import api from "@/services"
+import { mapState } from "vuex"
 import agFilters from "@/mixins/filterMixins.js"
 import CustomLoadingOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customLoadingOverlayVue"
 import CustomNoRowsOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customNoRowsOverlayVue"
@@ -250,6 +251,11 @@ export default {
     })
     this.$store.commit("agFilter/setCurrentTable", "")
   },
+  computed: {
+    ...mapState({
+      currentFilter: (state) => state.agFilter.currentFilter,
+    }),
+  },
   methods: {
     // onRowSelected(event) {
     //   window.alert(
@@ -283,6 +289,7 @@ export default {
         model = {
           ...model,
           ...modelObj,
+          ...this.currentFilter
         }
       }
       // check status custom phase
@@ -587,6 +594,9 @@ export default {
       const keyArray = Object.keys(_model)
       if (keyArray.includes("filterModel[status][filter]")) {
         delete model["filterModel[status][filter]"]
+      }
+      if (keyArray.includes("filterModel[status_single][filter]")) {
+        delete model["filterModel[status_single][filter]"]
       }
       return model
     },

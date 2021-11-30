@@ -5,6 +5,7 @@ const agFilter = {
       filterWithSideBarSingle_status: null
     },
     currentTable: "",
+    currentFilter: {}
   }),
   mutations: {
     "agFilter/setDefaultFilter"(state, payload) {
@@ -15,6 +16,12 @@ const agFilter = {
     },
     "agFilter/setCurrentTable"(state, tableName) {
       state.currentTable = tableName
+    },
+    "agFilter/setCurrentFilter"(state, payload) {
+      state.currentFilter = {
+        ...(state.currentFilter || {}),
+        ...payload,
+      }
     },
   },
   actions: {},
