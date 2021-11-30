@@ -217,6 +217,11 @@ export default {
     //     per_page:queryParse.size || 15,
     // }
   },
+  beforeDestroy() {
+    this.$store.commit("agFilter/setDefaultFilter", {
+      filterWithSideBar_status: {},
+    })
+  },
   methods: {
     // onRowSelected(event) {
     //   window.alert(

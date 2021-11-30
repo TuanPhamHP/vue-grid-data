@@ -211,11 +211,19 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit("agFilter/setCurrentTable", "ColumnFiltersWithSidebar")
+    this.$store.commit(
+      "agFilter/setCurrentTable",
+      "ColumnFiltersWithSidebarSingle",
+    )
     // const pagination = {
     //    current_page: queryParse.page || 1,
     //     per_page:queryParse.size || 15,
     // }
+  },
+  beforeDestroy() {
+    this.$store.commit("agFilter/setDefaultFilter", {
+      filterWithSideBarSingle_status: {},
+    })
   },
   methods: {
     // onRowSelected(event) {
@@ -419,7 +427,7 @@ export default {
       }
       if (queryParse.status) {
         this.$store.commit("agFilter/setDefaultFilter", {
-          filterWithSideBar_status: { ...queryParse.status },
+          filterWithSideBarSingle_status: { ...queryParse.status },
         })
       }
       this.gridApi.setFilterModel(queryParse)

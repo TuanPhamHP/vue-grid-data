@@ -23,17 +23,19 @@
           v-model="ftValueSingle"
           type="radio"
           :id="`item-numb-${idx}`"
-          name="vehicle1"
           :value="item[itemValue]"
         />
         <label :for="`item-numb-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
     </div>
+    <div class="clear-button">
+      <div @click="clearSingle" class="text">Clear</div>
+    </div>
   </div>
 </template>
 
 <script>
-// filterWithSideBar_status
+// filterWithSideBarSingle_status
 import { mapState } from "vuex"
 export default {
   props: {},
@@ -72,9 +74,12 @@ export default {
     defaultFilter: {
       deep: true,
       handler() {
-        if (this.defaultFilter && this.defaultFilter.filterWithSideBar_status) {
+        if (
+          this.defaultFilter &&
+          this.defaultFilter.filterWithSideBarSingle_status
+        ) {
           this.handlerSyncStoredFilter(
-            this.defaultFilter.filterWithSideBar_status,
+            this.defaultFilter.filterWithSideBarSingle_status,
           )
         }
       },
@@ -86,8 +91,13 @@ export default {
     }),
   },
   mounted() {
-    if (this.defaultFilter && this.defaultFilter.filterWithSideBar_status) {
-      this.handlerSyncStoredFilter(this.defaultFilter.filterWithSideBar_status)
+    if (
+      this.defaultFilter &&
+      this.defaultFilter.filterWithSideBarSingle_status
+    ) {
+      this.handlerSyncStoredFilter(
+        this.defaultFilter.filterWithSideBarSingle_status,
+      )
     }
   },
   methods: {
@@ -119,12 +129,21 @@ export default {
         },
       })
     },
+    clearSingle() {
+      this.ftValueSingle = null;
+      this.params.filterChangedCallback({
+        status: {
+          filter: null,
+          filterType: "single-choices",
+          type: "select",
+        },
+      })
+    },
     handlerSyncStoredFilter(_filterObj) {
       if (_filterObj.filterType === "multiple-choices") {
         this.albleToReact = false
         this.ftValue = _filterObj.filter ? _filterObj.filter.split(",") : []
-      }
-      else {
+      } else {
         this.albleToReact = false
         this.ftValueSingle = _filterObj.filter ? _filterObj.filter : []
       }
@@ -155,6 +174,23 @@ export default {
       cursor: pointer;
       padding-left: 6px;
     }
+  }
+}
+.clear-button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 12px 4px 0px;
+  .text {
+    color: var(--ag-alpine-active-color, #2196f3);
+    font-size: 13.3333px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #2196f3;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+    width: fit-content;
   }
 }
 </style>
