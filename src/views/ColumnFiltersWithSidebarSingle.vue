@@ -326,30 +326,30 @@ export default {
           queries,
           `filterModel[${o}][filter]`,
         )
-        if (tainted) {
-          if (
-            queriesComputed[`filterModel[status_single][filterType]`] ===
-            "single-choices"
-          ) {
-            const arrFromFilter = queriesComputed[
-              `filterModel[status_single][filter]`
-            ]
-              ? queriesComputed[`filterModel[status_single][filter]`]
-              : []
-            queriesComputed[`filterModel[status_single][filter][0]`] =
-              arrFromFilter
-          }
-          if (
-            queriesComputed[`filterModel[${o}][filterType]`] ===
-            "multiple-choices"
-          ) {
-            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
-              : []
-            arrFromFilter.forEach((j, idx) => {
-              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
-            })
-          }
+        if (
+          queriesComputed[`filterModel[status_single][filterType]`] ===
+            "single-choices" &&
+          (!tainted || tainted)
+        ) {
+          const arrFromFilter = queriesComputed[
+            `filterModel[status_single][filter]`
+          ]
+            ? queriesComputed[`filterModel[status_single][filter]`]
+            : []
+          queriesComputed[`filterModel[status_single][filter][0]`] =
+            arrFromFilter
+        }
+        if (
+          queriesComputed[`filterModel[${o}][filterType]`] ===
+            "multiple-choices" &&
+          tainted
+        ) {
+          const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
+            ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+            : []
+          arrFromFilter.forEach((j, idx) => {
+            queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
+          })
         }
       })
       if (!this.lockDownFilterApi) {
@@ -472,9 +472,10 @@ export default {
           }
         }
       }
-      if (queryParse.status) {
+      if (queryParse.status_single || queryParse.status) {
         this.$store.commit("agFilter/setDefaultFilter", {
-          filterWithSideBarSingle_status: { ...queryParse.status },
+          filterWithSideBarSingle_status: { ...queryParse.status_single },
+          filterWithSideBar_status: { ...queryParse.status },
         })
       }
       this.gridApi.setFilterModel(queryParse)
@@ -530,30 +531,30 @@ export default {
           queries,
           `filterModel[${o}][filter]`,
         )
-        if (tainted) {
-          if (
-            queriesComputed[`filterModel[status_single][filterType]`] ===
-            "single-choices"
-          ) {
-            const arrFromFilter = queriesComputed[
-              `filterModel[status_single][filter]`
-            ]
-              ? queriesComputed[`filterModel[status_single][filter]`]
-              : []
-            queriesComputed[`filterModel[status_single][filter][0]`] =
-              arrFromFilter
-          }
-          if (
-            queriesComputed[`filterModel[${o}][filterType]`] ===
-            "multiple-choices"
-          ) {
-            const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
-              ? queriesComputed[`filterModel[${o}][filter]`].split(",")
-              : []
-            arrFromFilter.forEach((j, idx) => {
-              queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
-            })
-          }
+        if (
+          queriesComputed[`filterModel[status_single][filterType]`] ===
+            "single-choices" &&
+          (!tainted || tainted)
+        ) {
+          const arrFromFilter = queriesComputed[
+            `filterModel[status_single][filter]`
+          ]
+            ? queriesComputed[`filterModel[status_single][filter]`]
+            : []
+          queriesComputed[`filterModel[status_single][filter][0]`] =
+            arrFromFilter
+        }
+        if (
+          queriesComputed[`filterModel[${o}][filterType]`] ===
+            "multiple-choices" &&
+          tainted
+        ) {
+          const arrFromFilter = queriesComputed[`filterModel[${o}][filter]`]
+            ? queriesComputed[`filterModel[${o}][filter]`].split(",")
+            : []
+          arrFromFilter.forEach((j, idx) => {
+            queriesComputed[`filterModel[${o}][filter][${idx}]`] = j
+          })
         }
       })
       this.$router
