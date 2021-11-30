@@ -44,7 +44,7 @@ import agFilters from "@/mixins/filterMixins.js"
 import CustomLoadingOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customLoadingOverlayVue"
 import CustomNoRowsOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customNoRowsOverlayVue"
 import Pagination from "@/components/AgTableCustomComponent/Footer/Pagination.vue"
-import FilterBySelect from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelect.vue"
+import FilterBySelectSingle from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelectSingle.vue"
 //
 // var listStatus = [
 //   { id: 1, name: "Nháp" },
@@ -70,7 +70,7 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     customNoRowsOverlay: CustomNoRowsOverlay,
     // eslint-disable-next-line vue/no-unused-components
-    filterBySelect: FilterBySelect,
+    FilterBySelectSingle: FilterBySelectSingle,
   },
   mixins: [agFilters],
   data() {
@@ -118,7 +118,7 @@ export default {
         },
         {
           field: "status.name",
-          filterFramework: "filterBySelect",
+          filterFramework: "FilterBySelectSingle",
           // filter: "agSetColumnFilter",
 
           icons: "fa-bars",
@@ -211,7 +211,10 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit("agFilter/setCurrentTable", "ColumnFiltersWithSidebar")
+    this.$store.commit(
+      "agFilter/setCurrentTable",
+      "ColumnFiltersWithSidebarSingle",
+    )
     // const pagination = {
     //    current_page: queryParse.page || 1,
     //     per_page:queryParse.size || 15,
@@ -219,7 +222,7 @@ export default {
   },
   beforeDestroy() {
     this.$store.commit("agFilter/setDefaultFilter", {
-      filterWithSideBar_status: {},
+      filterWithSideBarSingle_status: {},
     })
   },
   methods: {
@@ -268,14 +271,14 @@ export default {
       }
       // console.log(filterApplied)
       // this.$router.replace({
-      //   path: "/column-filters-sidebar",
+      //   path: "/column-filters-sidebar-single",
       //   query: {
       //     ...filterApplied,
       //     ...paginationQuery,
       //   },
       // })
       this.$router
-        .replace(`/column-filters-sidebar?${filterApplied}`)
+        .replace(`/column-filters-sidebar-single?${filterApplied}`)
         .catch((error) => {
           if (error.name != "NavigationDuplicated") {
             return null
@@ -321,7 +324,7 @@ export default {
         const query = {
           include: "fields,approvers,followers,creator,category",
           type: "i_approve",
-          ...this.handleRemoveUnusedQuery(queriesComputed),
+          ...queriesComputed,
           ...paginationQuery,
         }
         const res = await api.appData.getApproval(query)
@@ -348,7 +351,7 @@ export default {
       }
       this.$router
         .replace({
-          path: "/column-filters-sidebar",
+          path: "/column-filters-sidebar-single",
           query: {
             ...filterApplied,
             ...paginationQuery,
@@ -424,7 +427,7 @@ export default {
       }
       if (queryParse.status) {
         this.$store.commit("agFilter/setDefaultFilter", {
-          filterWithSideBar_status: { ...queryParse.status },
+          filterWithSideBarSingle_status: { ...queryParse.status },
         })
       }
       this.gridApi.setFilterModel(queryParse)
@@ -496,7 +499,7 @@ export default {
       })
       this.$router
         .replace({
-          path: "/column-filters-sidebar",
+          path: "/column-filters-sidebar-single",
           query: {
             ...queries,
             ...paginationQuery,
@@ -507,9 +510,7 @@ export default {
             return null
           }
         })
-      const res = await api.appData.getApproval(
-        this.handleRemoveUnusedQuery(queriesComputed),
-      )
+      const res = await api.appData.getApproval(queriesComputed)
       if (!res) {
         return null
       }
@@ -540,17 +541,6 @@ export default {
       }
 
       this.paginationChagedCallback()
-    },
-    handleRemoveUnusedQuery(_model) {
-      if (!_model) {
-        return {}
-      }
-      const model = { ..._model }
-      const keyArray = Object.keys(_model)
-      if (keyArray.includes("filterModel[status][filter]")) {
-        delete model["filterModel[status][filter]"]
-      }
-      return model
     },
   },
 }

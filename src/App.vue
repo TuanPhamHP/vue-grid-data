@@ -10,6 +10,10 @@
       <router-link to="/column-filters-sidebar"
         >ColumnFiltersWithSidebar</router-link
       >
+      |
+      <router-link to="/column-filters-sidebar-single"
+        >ColumnFiltersWithSidebarSingle</router-link
+      >
     </div>
     <router-view />
     <div class="btn-reset-token" @click="resetToken">Reset Token</div>

@@ -2,6 +2,7 @@ const agFilter = {
   state: () => ({
     defaultFilter: {
       filterWithSideBar_status: null,
+      filterWithSideBarSingle_status: null
     },
     currentTable: "",
   }),
