@@ -124,6 +124,10 @@ export default {
         this.albleToReact = false
         this.ftValue = _filterObj.filter ? _filterObj.filter.split(",") : []
       }
+      else {
+        this.albleToReact = false
+        this.ftValueSingle = _filterObj.filter ? _filterObj.filter : []
+      }
       this.$nextTick(() => {
         this.albleToReact = true
       })
