@@ -246,14 +246,12 @@ export default {
     // }
   },
   beforeDestroy() {
-    this.$store.commit("agFilter/setDefaultFilter", {
-      filterWithSideBarSingle_status: {},
-    })
+    this.$store.commit("agFilter/setCustomFilter", {})
     this.$store.commit("agFilter/setCurrentTable", "")
   },
   computed: {
     ...mapState({
-      currentFilter: (state) => state.agFilter.currentFilter,
+      customFilters: (state) => state.agFilter.customFilters,
     }),
   },
   methods: {
@@ -288,8 +286,8 @@ export default {
       if (modelObj) {
         model = {
           ...model,
+          ...this.customFilters,
           ...modelObj,
-          ...this.currentFilter,
         }
       }
       // check status custom phase
@@ -472,11 +470,14 @@ export default {
           }
         }
       }
-      if (queryParse.status_single || queryParse.status) {
-        this.$store.commit("agFilter/setDefaultFilter", {
-          filterWithSideBarSingle_status: { ...queryParse.status_single },
-          filterWithSideBar_status: { ...queryParse.status },
-        })
+      const customFilters = {}
+      if (queryParse.status) {
+        customFilters.status = {
+          ...queryParse.status,
+        }
+      }
+      if (Object.keys(customFilters).length) {
+        this.$store.commit("agFilter/setCustomFilter", customFilters)
       }
       this.gridApi.setFilterModel(queryParse)
       this.expandFilterGroup(listQueryKeys)
