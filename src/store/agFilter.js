@@ -2,15 +2,21 @@ const agFilter = {
   state: () => ({
     defaultFilter: {
       filterWithSideBar_status: null,
-      filterWithSideBarSingle_status: null
+      filterWithSideBarSingle_status: null,
     },
     currentTable: "",
-    currentFilter: {}
+    currentFilter: {},
+    customFilters: {},
   }),
   mutations: {
     "agFilter/setDefaultFilter"(state, payload) {
       state.defaultFilter = {
         ...(state.defaultFilter || {}),
+        ...payload,
+      }
+    },
+    "agFilter/setCustomFilter"(state, payload) {
+      state.customFilters = {
         ...payload,
       }
     },

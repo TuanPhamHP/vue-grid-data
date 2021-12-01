@@ -262,7 +262,7 @@ export default {
         model = {
           ...model,
           ...modelObj,
-          ...this.currentFilter
+          ...this.currentFilter,
         }
       }
       // check status custom phase
@@ -351,8 +351,7 @@ export default {
     async paginationChagedCallback() {
       this.showLoadingOverlay()
       // const prevQuery = this.$route.query
-      const model = this.gridApi.getFilterModel()
-      const filterApplied = this.parseFilterToParams(model)
+      const queries = this.$route.query
       const paginationQuery = {
         size: this.currentPagination.per_page,
         page: this.currentPagination.current_page,
@@ -361,7 +360,7 @@ export default {
         .replace({
           path: "/column-filters-sidebar",
           query: {
-            ...filterApplied,
+            ...queries,
             ...paginationQuery,
           },
         })
@@ -389,8 +388,7 @@ export default {
         const query = {
           include: "fields,approvers,followers,creator,category",
           type: "i_approve",
-          keyword: filterApplied.name,
-          ...filterApplied,
+          ...queries,
           ...paginationQuery,
         }
         const res = await api.appData.getApproval(query)
@@ -433,10 +431,14 @@ export default {
           }
         }
       }
+      const customFilters = {}
       if (queryParse.status) {
-        this.$store.commit("agFilter/setDefaultFilter", {
-          filterWithSideBar_status: { ...queryParse.status },
-        })
+        customFilters.status = {
+          ...queryParse.status,
+        }
+      }
+      if (Object.keys(customFilters).length) {
+        this.$store.commit("agFilter/setCustomFilter", customFilters)
       }
       this.gridApi.setFilterModel(queryParse)
       this.expandFilterGroup(listQueryKeys)

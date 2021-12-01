@@ -82,24 +82,24 @@ export default {
   },
   computed: {
     ...mapState({
-      defaultFilter: (state) => state.agFilter.defaultFilter,
+      customFilters: (state) => state.agFilter.customFilters,
     }),
   },
   mounted() {
-    if (this.defaultFilter && this.defaultFilter.filterWithSideBar_status) {
-      this.handlerSyncStoredFilter(this.defaultFilter.filterWithSideBar_status)
+    if (this.customFilters && this.customFilters.status) {
+      this.handlerSyncStoredFilter(this.customFilters.status)
     }
   },
   methods: {
     updateFilterMulti() {
       if (this.ftValue && this.ftValue.length) {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status: {
-            filter: this.ftValue,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
+        // this.$store.commit("agFilter/setCurrentFilter", {
+        //   status: {
+        //     filter: this.ftValue,
+        //     filterType: "multiple-choices",
+        //     type: "select",
+        //   },
+        // })
         this.params.filterChangedCallback({
           status: {
             filter: this.ftValue,
@@ -108,13 +108,13 @@ export default {
           },
         })
       } else {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status: {
-            filter: null,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
+        // this.$store.commit("agFilter/setCurrentFilter", {
+        //   status: {
+        //     filter: null,
+        //     filterType: "multiple-choices",
+        //     type: "select",
+        //   },
+        // })
         this.params.filterChangedCallback({
           status: {
             filter: null,
