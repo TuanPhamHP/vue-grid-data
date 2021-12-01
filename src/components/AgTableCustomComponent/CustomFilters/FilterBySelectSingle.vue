@@ -62,7 +62,6 @@ export default {
   computed: {
     ...mapState({
       customFilters: (state) => state.agFilter.customFilters,
-      currentFilter: (state) => state.agFilter.currentFilter,
     }),
   },
   mounted() {
@@ -84,10 +83,7 @@ export default {
       this.ftValueSingle = ""
     },
     handlerSyncStoredFilter(_filterObj) {
-      if (_filterObj.filterType === "multiple-choices") {
-        this.albleToReact = false
-        this.ftValue = _filterObj.filter ? _filterObj.filter.split(",") : []
-      } else {
+      if (_filterObj.filterType === "single-choices") {
         this.albleToReact = false
         this.ftValueSingle = _filterObj.filter ? _filterObj.filter : ""
       }

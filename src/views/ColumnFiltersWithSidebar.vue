@@ -430,7 +430,10 @@ export default {
         }
       }
       const customFilters = {}
-      if (queryParse.status) {
+      if (queryParse.status_single || queryParse.status) {
+        customFilters.status_single = {
+          ...queryParse.status_single,
+        }
         customFilters.status = {
           ...queryParse.status,
         }
