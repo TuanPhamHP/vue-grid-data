@@ -11,22 +11,9 @@
           type="checkbox"
           :id="`item-numb-${idx}`"
           name="vehicle1"
-          :value="item[itemValue]"
+          :value="item.id"
         />
         <label :for="`item-numb-${idx}`"> {{ item[itemText] || item }}</label>
-      </div>
-    </div>
-    <!-- single select -->
-    <div v-if="!multiple" class="select-list-wr">
-      <div v-for="(item, idx) in items" :key="idx" class="each-filter-option">
-        <input
-          v-model="ftValueSingle"
-          type="radio"
-          :id="`item-numb2-${idx}`"
-          name="vehicle2"
-          :value="item[itemValue]"
-        />
-        <label :for="`item-numb2-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
     </div>
   </div>
@@ -41,10 +28,9 @@ export default {
     return {
       year: "All",
       ftValue: [],
-      ftValueSingle: "",
       items: [
-        { id: 1, name: "Nháp" },
-        { id: 2, name: "Đã gửi" },
+        { id: "1", name: "Nháp" },
+        { id: "2", name: "Đã gửi" },
       ],
       itemValue: "id",
       itemText: "name",
@@ -61,20 +47,12 @@ export default {
         }
       },
     },
-    ftValueSingle: {
+    customFilters: {
       deep: true,
       handler() {
-        if (this.albleToReact) {
-          this.updateFilterSingle()
-        }
-      },
-    },
-    defaultFilter: {
-      deep: true,
-      handler() {
-        if (this.defaultFilter && this.defaultFilter.filterWithSideBar_status) {
+        if (this.customFilters && this.customFilters.status) {
           this.handlerSyncStoredFilter(
-            this.defaultFilter.filterWithSideBar_status,
+            this.customFilters.status,
           )
         }
       },
@@ -109,22 +87,6 @@ export default {
           },
         })
       }
-    },
-    updateFilterSingle() {
-      this.$store.commit("agFilter/setCurrentFilter", {
-        status_single: {
-          filter: this.ftValueSingle,
-          filterType: "single-choices",
-          type: "select",
-        },
-      })
-      this.params.filterChangedCallback({
-        status_single: {
-          filter: this.ftValueSingle,
-          filterType: "single-choices",
-          type: "select",
-        },
-      })
     },
     handlerSyncStoredFilter(_filterObj) {
       if (_filterObj.filterType === "multiple-choices") {

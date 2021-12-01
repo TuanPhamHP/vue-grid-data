@@ -3,19 +3,6 @@
     <div style="padding: 10px; background-color: #d3d3d3; text-align: center">
       Filter chọn một
     </div>
-    <!-- multi select -->
-    <div v-if="multiple" class="select-list-wr">
-      <div v-for="(item, idx) in items" :key="idx" class="each-filter-option">
-        <input
-          v-model="ftValue"
-          type="checkbox"
-          :id="`item-numb3-${idx}`"
-          name="vehicle3"
-          :value="item[itemValue]"
-        />
-        <label :for="`item-numb3-${idx}`"> {{ item[itemText] || item }}</label>
-      </div>
-    </div>
     <!-- single select -->
     <div v-if="!multiple" class="select-list-wr">
       <div v-for="(item, idx) in items" :key="idx" class="each-filter-option">
@@ -24,7 +11,7 @@
           type="radio"
           :id="`item-numb4-${idx}`"
           name="vehicle4"
-          :value="item[itemValue]"
+          :value="item.id"
         />
         <label :for="`item-numb4-${idx}`"> {{ item[itemText] || item }}</label>
       </div>
@@ -43,11 +30,10 @@ export default {
   data() {
     return {
       year: "All",
-      ftValue: [],
-      ftValueSingle: [],
+      ftValueSingle: "",
       items: [
-        { id: 1, name: "Nháp" },
-        { id: 2, name: "Đã gửi" },
+        { id: "1", name: "Nháp" },
+        { id: "2", name: "Đã gửi" },
       ],
       itemValue: "id",
       itemText: "name",
@@ -56,14 +42,6 @@ export default {
     }
   },
   watch: {
-    ftValue: {
-      deep: true,
-      handler() {
-        if (this.albleToReact) {
-          this.updateFilterMulti()
-        }
-      },
-    },
     ftValueSingle: {
       deep: true,
       handler() {
@@ -72,105 +50,38 @@ export default {
         }
       },
     },
-    defaultFilter: {
+    customFilters: {
       deep: true,
       handler() {
-        if (
-          this.defaultFilter &&
-          this.defaultFilter.filterWithSideBarSingle_status
-        ) {
-          this.handlerSyncStoredFilter(
-            this.defaultFilter.filterWithSideBarSingle_status,
-          )
+        if (this.customFilters && this.customFilters.status_single) {
+          this.handlerSyncStoredFilter(this.customFilters.status_single)
         }
       },
     },
   },
   computed: {
     ...mapState({
-      defaultFilter: (state) => state.agFilter.defaultFilter,
+      customFilters: (state) => state.agFilter.customFilters,
       currentFilter: (state) => state.agFilter.currentFilter,
     }),
   },
   mounted() {
-    if (
-      this.defaultFilter &&
-      this.defaultFilter.filterWithSideBarSingle_status
-    ) {
-      this.handlerSyncStoredFilter(
-        this.defaultFilter.filterWithSideBarSingle_status,
-      )
+    if (this.customFilters && this.customFilters.status_single) {
+      this.handlerSyncStoredFilter(this.customFilters.status_single)
     }
   },
   methods: {
-    updateFilterMulti() {
-      if (this.ftValue && this.ftValue.length) {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status: {
-            filter: this.ftValue,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
-        this.params.filterChangedCallback({
-          status: {
-            filter: this.ftValue,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
-      } else {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status: {
-            filter: null,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
-        this.params.filterChangedCallback({
-          status: {
-            filter: null,
-            filterType: "multiple-choices",
-            type: "select",
-          },
-        })
-      }
-    },
     updateFilterSingle() {
-      if (this.ftValueSingle) {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status_single: {
-            filter: this.ftValueSingle,
-            filterType: "single-choices",
-            type: "select",
-          },
-        })
-        this.params.filterChangedCallback({
-          status_single: {
-            filter: this.ftValueSingle,
-            filterType: "single-choices",
-            type: "select",
-          },
-        })
-      } else {
-        this.$store.commit("agFilter/setCurrentFilter", {
-          status_single: {
-            filter: this.ftValueSingle,
-            filterType: "single-choices",
-            type: "select",
-          },
-        })
-        this.params.filterChangedCallback({
-          status_single: {
-            filter: this.ftValueSingle,
-            filterType: "single-choices",
-            type: "select",
-          },
-        })
-      }
+      this.params.filterChangedCallback({
+        status_single: {
+          filter: this.ftValueSingle,
+          filterType: "single-choices",
+          type: "select",
+        },
+      })
     },
     clearSingle() {
-      this.ftValueSingle = null
+      this.ftValueSingle = ""
     },
     handlerSyncStoredFilter(_filterObj) {
       if (_filterObj.filterType === "multiple-choices") {
@@ -178,7 +89,7 @@ export default {
         this.ftValue = _filterObj.filter ? _filterObj.filter.split(",") : []
       } else {
         this.albleToReact = false
-        this.ftValueSingle = _filterObj.filter ? _filterObj.filter : []
+        this.ftValueSingle = _filterObj.filter ? _filterObj.filter : ""
       }
       this.$nextTick(() => {
         this.albleToReact = true
