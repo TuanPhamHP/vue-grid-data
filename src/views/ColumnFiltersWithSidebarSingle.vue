@@ -205,6 +205,13 @@ export default {
           maxWidth: 200,
           headerName: "Ngày tạo",
         },
+        {
+          field: "action",
+          filter: null,
+          icons: "fa-bars",
+          maxWidth: 200,
+          headerName: "Hành động",
+        },
       ],
       gridApi: null,
       columnApi: null,
