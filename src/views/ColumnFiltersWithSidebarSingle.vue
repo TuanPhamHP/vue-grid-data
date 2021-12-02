@@ -387,7 +387,7 @@ export default {
     },
     async paginationChagedCallback() {
       this.showLoadingOverlay()
-      // const prevQuery = this.$route.query
+      const prevQuery = this.$route.query
       const model = this.gridApi.getFilterModel()
       const filterApplied = this.parseFilterToParams(model)
       const paginationQuery = {
@@ -398,6 +398,7 @@ export default {
         .replace({
           path: "/column-filters-sidebar-single",
           query: {
+            ...prevQuery,
             ...filterApplied,
             ...paginationQuery,
           },
@@ -427,6 +428,7 @@ export default {
           include: "fields,approvers,followers,creator,category",
           type: "i_approve",
           keyword: filterApplied.name,
+          ...prevQuery,
           ...filterApplied,
           ...paginationQuery,
         }
