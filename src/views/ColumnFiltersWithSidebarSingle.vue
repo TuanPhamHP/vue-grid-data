@@ -297,7 +297,7 @@ export default {
         '">'
       const eDiv = document.createElement("div")
       eDiv.innerHTML =
-        '<span class="my-css-class"><button class="btn-simple">Push Me</button></span>'
+        '<span class="my-css-class"><button class="btn-simple">Thêm</button></span>'
       const eButton = eDiv.querySelectorAll(".btn-simple")[0]
 
       eButton.addEventListener("click", () => {
