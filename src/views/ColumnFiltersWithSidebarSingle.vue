@@ -30,6 +30,11 @@
         :show-per-page="true"
       ></Pagination>
     </div>
+    <DialogEdit
+      :toggle-dialog="toggleDialog"
+      :close-edit="closeEdit"
+      :edit-data="editData"
+    />
   </div>
 </template>
 
@@ -48,6 +53,7 @@ import EditAndRemove from "@/components/AgTableCustomComponent/CustomCell/EditAn
 import Pagination from "@/components/AgTableCustomComponent/Footer/Pagination.vue"
 import FilterBySelectSingle from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelectSingle.vue"
 import FilterBySelect from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelect.vue"
+import DialogEdit from "@/components/AgTableCustomComponent/Dialog/DialogEdit.vue"
 //
 // var listStatus = [
 //   { id: 1, name: "Nháp" },
@@ -78,6 +84,8 @@ export default {
     FilterBySelectSingle: FilterBySelectSingle,
     // eslint-disable-next-line vue/no-unused-components
     FilterBySelect: FilterBySelect,
+    // eslint-disable-next-line vue/no-unused-components
+    DialogEdit: DialogEdit,
   },
   mixins: [agFilters],
   data() {
@@ -190,14 +198,14 @@ export default {
           maxWidth: 200,
           headerName: "Ngày tạo",
         },
-        {
-          field: "action",
-          filter: null,
-          icons: "fa-bars",
-          maxWidth: 200,
-          headerName: "Hành động",
-          cellRenderer: this.bracketsFormatter,
-        },
+        // {
+        //   field: "action",
+        //   filter: null,
+        //   icons: "fa-bars",
+        //   maxWidth: 200,
+        //   headerName: "Hành động",
+        //   cellRenderer: this.bracketsFormatter,
+        // },
         {
           field: "action2",
           filter: null,
@@ -222,6 +230,8 @@ export default {
         filter: true,
       },
       rowData: null,
+      toggleDialog: false,
+      editData: {},
       frameworkComponents: null,
       loadingOverlayComponentFramework: "customLoadingOverlay",
       loadingOverlayComponentParams: null,
@@ -285,6 +295,11 @@ export default {
     },
     editClicked(_val) {
       console.log(_val, "editClicked fired in parent component")
+      this.editData = { ..._val }
+      this.toggleDialog = true
+    },
+    closeEdit() {
+      this.toggleDialog = false
     },
     cellClicked(event) {
       if (event.data.id === event.value) {
