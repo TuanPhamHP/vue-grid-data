@@ -22,6 +22,9 @@
       before, with the power to heal as well as to destroy. Now he uses his gift
       to cut down his enemies and mend his friends.
     </div>
+    <div class="footer">
+      <div @click="closeEdit" class="edit-button">Sửa</div>
+    </div>
   </div>
 </template>
 
@@ -71,5 +74,24 @@ export default {
 .header {
   font-size: 16px;
   margin-bottom: 10px;
+}
+.footer {
+  background-color: #f2f4f6;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.edit-button {
+  height: 40px;
+  color: #fff;
+  font-weight: 700;
+  min-width: 98px;
+  background-color: #006a9b;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
 }
 </style>
