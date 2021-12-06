@@ -9,10 +9,12 @@
 export default {
   methods: {
     editClicked(val) {
-      console.log("edit clicked", val.data)
+      val.editClicked(val.data)
+      console.log("edit clicked", val)
     },
     removeClicked(val) {
-      console.log("remove clicked", val.data)
+      val.removeClicked(val.data)
+      console.log("remove clicked", val)
     },
   },
 }

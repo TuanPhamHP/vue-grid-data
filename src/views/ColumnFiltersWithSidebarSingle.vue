@@ -133,15 +133,6 @@ export default {
           headerName: "Trạng thái đơn",
           filterParams: {
             filterChangedCallback: this.filterChangedCallback,
-            // valueFormatter: (params) => {
-            //   return params.value
-            // },
-            // values: function (params) {
-            //   params.success(listStatus.map((o) => o.name))
-            //   // setTimeout(function () {
-            //   //   params.success([...listStatus])
-            //   // }, 1000)
-            // },
           },
         },
         {
@@ -154,15 +145,6 @@ export default {
           headerName: "Trạng thái",
           filterParams: {
             filterChangedCallback: this.filterChangedCallback,
-            // valueFormatter: (params) => {
-            //   return params.value
-            // },
-            // values: function (params) {
-            //   params.success(listStatus.map((o) => o.name))
-            //   // setTimeout(function () {
-            //   //   params.success([...listStatus])
-            //   // }, 1000)
-            // },
           },
         },
         {
@@ -223,6 +205,12 @@ export default {
           maxWidth: 200,
           headerName: "Hành động2",
           cellRendererFramework: "EditAndRemove",
+          cellRendererParams: () => {
+            return {
+              editClicked: this.editClicked,
+              removeClicked: this.removeClicked,
+            }
+          },
         },
       ],
       gridApi: null,
@@ -292,6 +280,12 @@ export default {
     //     "row " + event.node.data.id + " selected = " + event.node.isSelected(),
     //   )
     // },
+    removeClicked(_val) {
+      console.log(_val, "removeClicked fired in parent component")
+    },
+    editClicked(_val) {
+      console.log(_val, "editClicked fired in parent component")
+    },
     cellClicked(event) {
       if (event.data.id === event.value) {
         window.alert(`Cột ID: {event.value}`)
