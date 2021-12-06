@@ -44,6 +44,7 @@ import { mapState } from "vuex"
 import agFilters from "@/mixins/filterMixins.js"
 import CustomLoadingOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customLoadingOverlayVue"
 import CustomNoRowsOverlay from "@/components/AgTableCustomComponent/LoadingOverlay/customNoRowsOverlayVue"
+import EditAndRemove from "@/components/AgTableCustomComponent/CustomCell/EditAndRemove"
 import Pagination from "@/components/AgTableCustomComponent/Footer/Pagination.vue"
 import FilterBySelectSingle from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelectSingle.vue"
 import FilterBySelect from "@/components/AgTableCustomComponent/CustomFilters/FilterBySelect.vue"
@@ -69,6 +70,8 @@ export default {
     Pagination,
     // eslint-disable-next-line vue/no-unused-components
     customLoadingOverlay: CustomLoadingOverlay,
+    // eslint-disable-next-line vue/no-unused-components
+    EditAndRemove: EditAndRemove,
     // eslint-disable-next-line vue/no-unused-components
     customNoRowsOverlay: CustomNoRowsOverlay,
     // eslint-disable-next-line vue/no-unused-components
@@ -212,6 +215,14 @@ export default {
           maxWidth: 200,
           headerName: "Hành động",
           cellRenderer: this.bracketsFormatter,
+        },
+        {
+          field: "action2",
+          filter: null,
+          icons: "fa-bars",
+          maxWidth: 200,
+          headerName: "Hành động2",
+          cellRendererFramework: "EditAndRemove",
         },
       ],
       gridApi: null,
