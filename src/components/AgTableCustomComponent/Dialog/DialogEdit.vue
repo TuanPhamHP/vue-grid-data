@@ -58,7 +58,7 @@ export default {
   left: 25%;
   width: 600px;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d3d3d3;
   z-index: 2;
 }
