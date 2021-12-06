@@ -54,7 +54,9 @@ export default {
   top: 25%;
   left: 25%;
   width: 600px;
-  background-color: #d3d3d3;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #d3d3d3;
   z-index: 2;
 }
 .close-button {
