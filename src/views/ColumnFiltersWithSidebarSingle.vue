@@ -295,15 +295,23 @@ export default {
         '<img style="cursor: pointer" border="0" width="15" height="10" src="' +
         url +
         '">'
-      const eDiv = document.createElement("div")
-      eDiv.innerHTML =
-        '<span class="my-css-class"><button class="btn-simple">Thêm</button></span>'
-      const eButton = eDiv.querySelectorAll(".btn-simple")[0]
+      const eDivEdit = document.createElement("div")
+      eDivEdit.innerHTML =
+        '<span class="my-css-class"><button class="btn-simple">Sửa</button></span>'
+      const eButtonEdit = eDivEdit.querySelectorAll(".btn-simple")[0]
 
-      eButton.addEventListener("click", () => {
-        console.log("button was clicked!!")
+      const eDivDelete = document.createElement("div")
+      eDivDelete.innerHTML =
+        '<span class="my-css-class"><button class="btn-simple">Xóa</button></span>'
+      const eButtonDelete = eDivDelete.querySelectorAll(".btn-simple")[0]
+
+      eButtonEdit.addEventListener("click", () => {
+        console.log("edited")
       })
-      return flagImage + eDiv.innerHTML;
+      eButtonDelete.addEventListener("click", () => {
+        console.log("deleted")
+      })
+      return flagImage + eDivEdit.innerHTML + eDivDelete.innerHTML
     },
     async filterChangedCallback(modelObj = null) {
       this.showLoadingOverlay()
