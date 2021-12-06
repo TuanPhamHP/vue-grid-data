@@ -219,14 +219,12 @@ export default {
     // }
   },
   beforeDestroy() {
-    this.$store.commit("agFilter/setDefaultFilter", {
-      filterWithSideBar_status: {},
-    })
+    this.$store.commit("agFilter/setCustomFilter", {})
     this.$store.commit("agFilter/setCurrentTable", "")
   },
   computed: {
     ...mapState({
-      currentFilter: (state) => state.agFilter.currentFilter,
+      customFilters: (state) => state.agFilter.customFilters,
     }),
   },
   methods: {
@@ -261,7 +259,7 @@ export default {
       if (modelObj) {
         model = {
           ...model,
-          ...this.currentFilter,
+          ...this.customFilters,
           ...modelObj,
         }
       }
@@ -432,7 +430,10 @@ export default {
         }
       }
       const customFilters = {}
-      if (queryParse.status) {
+      if (queryParse.status_single || queryParse.status) {
+        customFilters.status_single = {
+          ...queryParse.status_single,
+        }
         customFilters.status = {
           ...queryParse.status,
         }
