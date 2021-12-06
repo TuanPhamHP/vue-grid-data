@@ -261,8 +261,8 @@ export default {
       if (modelObj) {
         model = {
           ...model,
-          ...modelObj,
           ...this.currentFilter,
+          ...modelObj,
         }
       }
       // check status custom phase
