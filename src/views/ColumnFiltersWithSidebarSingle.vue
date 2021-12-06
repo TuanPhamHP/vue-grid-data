@@ -297,13 +297,13 @@ export default {
         '">'
       const eDivEdit = document.createElement("div")
       eDivEdit.innerHTML =
-        '<span class="my-css-class"><button class="btn-simple">Sửa</button></span>'
-      const eButtonEdit = eDivEdit.querySelectorAll(".btn-simple")[0]
+        '<span class="my-css-class"><button class="btn-edit">Sửa</button></span>'
+      const eButtonEdit = eDivEdit.querySelector(".btn-edit")
 
       const eDivDelete = document.createElement("div")
       eDivDelete.innerHTML =
-        '<span class="my-css-class"><button class="btn-simple">Xóa</button></span>'
-      const eButtonDelete = eDivDelete.querySelectorAll(".btn-simple")[0]
+        '<span class="my-css-class"><button class="btn-delete">Xóa</button></span>'
+      const eButtonDelete = eDivDelete.querySelector(".btn-delete")
 
       eButtonEdit.addEventListener("click", () => {
         console.log("edited")
