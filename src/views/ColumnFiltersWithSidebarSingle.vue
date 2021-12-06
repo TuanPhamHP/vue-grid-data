@@ -268,6 +268,19 @@ export default {
     this.$store.commit("agFilter/setCustomFilter", {})
     this.$store.commit("agFilter/setCurrentTable", "")
   },
+  watch: {
+    rowData: {
+      deep: true,
+      handler() {
+        this.$nextTick(() => {
+          if (this.rowData && Array.isArray(this.rowData)) {
+            this.paginationPageSize = this.rowData.length
+            console.log(this.rowData)
+          }
+        })
+      },
+    },
+  },
   computed: {
     ...mapState({
       customFilters: (state) => state.agFilter.customFilters,
@@ -399,6 +412,9 @@ export default {
         const updateData = (data, pagination) => {
           const _pagination = pagination
           this.currentPagination = { ..._pagination }
+          if (data && Array.isArray(data)) {
+            this.paginationPageSize = data.length
+          }
           let dataSource = {
             getRows: function (params) {
               setTimeout(function () {
@@ -455,6 +471,9 @@ export default {
       if (!this.lockDownFilterApi) {
         const _this = this
         const updateData = (data, pagination) => {
+          if (data && Array.isArray(data)) {
+            this.paginationPageSize = data.length
+          }
           const _pagination = pagination
           this.currentPagination = { ..._pagination }
           let dataSource = {
@@ -541,6 +560,9 @@ export default {
       // end setting filter
       const _this = this
       const updateData = (data, pagination) => {
+        if (data && Array.isArray(data)) {
+          this.paginationPageSize = data.length
+        }
         const _pagination = pagination
         this.currentPagination = { ..._pagination }
         let dataSource = {
