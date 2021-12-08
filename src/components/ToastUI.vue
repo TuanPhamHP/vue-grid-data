@@ -72,7 +72,8 @@ export default {
       background-color: #2fb246;
     }
     &.error {
-      background-color: #d35b09;
+      background-color: red;
+      
     }
   }
   .toast {
