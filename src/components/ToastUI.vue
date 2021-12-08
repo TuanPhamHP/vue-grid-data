@@ -43,6 +43,7 @@ export default {
     background-color: rgb(233, 233, 233);
     padding: 8px 16px;
     display: flex;
+    align-items: center;
     column-gap: 8px;
     color: black;
     width: 300px;
@@ -73,7 +74,7 @@ export default {
     }
     &.error {
       background-color: red;
-      
+
     }
   }
   .toast {
