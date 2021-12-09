@@ -204,6 +204,9 @@ export default {
           icons: "fa-bars",
           maxWidth: 200,
           headerName: "Hành động2",
+          valueFormatter: (params) => {
+            return params.value || "ayo"
+          },
           cellRendererFramework: "EditAndRemove",
           cellRendererParams: () => {
             return {
