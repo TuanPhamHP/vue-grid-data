@@ -3,6 +3,7 @@ import Vue from "vue"
 import Vuex from "vuex"
 import axios from "axios"
 import agFilter from "./agFilter"
+import toast from './toast'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -51,6 +52,6 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    agFilter,
+    agFilter,toast
   },
 })
